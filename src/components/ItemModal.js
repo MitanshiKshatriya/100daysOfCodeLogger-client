@@ -18,7 +18,9 @@ import uuid from 'react-uuid'
 class ItemModal extends Component {
 
     state = {
-        modal: false,
+        modal: this.props.isUpdate,
+        isUpdate: this.props.isUpdate,
+        _id: '',
         desc: ''
     }
 

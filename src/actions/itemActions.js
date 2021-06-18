@@ -1,4 +1,4 @@
-import {GET_ITEMS,ADD_ITEM,DELETE_ITEM,ITEMS_LOADING} from './types'
+import {GET_ITEMS,ADD_ITEM,DELETE_ITEM,UPDATE_ITEM,ITEMS_LOADING} from './types'
 import axios from 'axios'
 
 export const getItems = () => dispatch => {
@@ -56,4 +56,22 @@ export const setItemsLoading = () => {
     return {
         type: ITEMS_LOADING
     }
+}
+
+export const updateItem = (item) => dispatch => {
+    // return {
+    //     type: UPDATE_ITEM,
+    //     payload: item
+    // }
+    axios
+    .post('/api/logs/update', item)
+    .then(res=> 
+        dispatch({
+            type:UPDATE_ITEM,
+            payload: res.data
+        })
+    )
+    .catch(err=>
+        console.log(err) 
+     )
 }
