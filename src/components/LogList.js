@@ -20,7 +20,7 @@ class LogList extends Component {
     componentDidMount(){
         this.props.getItems();
     }
-
+    // _id coming from mongo
     onDeleteClick = (id) => {
         this.props.deleteItem(id);
     }
