@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Container, Button, ListGroup,ListGroupItem } from 'reactstrap'
-import uuid from 'react-uuid'
+import ItemModal from './ItemModal';
 
 import {connect} from 'react-redux';
-import { getItems } from '../actions/itemActions'
+import { getItems, deleteItem } from '../actions/itemActions'
 import PropTypes from 'prop-types' 
 
 class LogList extends Component {
@@ -21,23 +21,32 @@ class LogList extends Component {
         this.props.getItems();
     }
 
+    onDeleteClick = (id) => {
+        this.props.deleteItem(id);
+    }
+
     render() {
         // this.props.item.items
         const {items} = this.props.item
         return (
+            <>
             <Container>
-                <Button
+                <ItemModal/>
+            </Container>
+            <Container>
+                {/* <Button
                 color = "dark"
                 style = {{marginBottom:"2rem"}}
                 onClick={()=> {
                     const desc = prompt('Enter Item');
                     if(desc){
                         this.setState({
-                            items: [...this.state.items,{id:uuid(),desc}]
+                            // items: [...this.state.items,{id:uuid(),desc}]
                         })
                     }
                 }}
-                >Add Item</Button>
+                >Add Item</Button> */}
+
                 <ListGroup>
                     <TransitionGroup className="log-list">
                        {
@@ -49,11 +58,7 @@ class LogList extends Component {
                                 className="remove-btn"
                                 color="danger"
                                 size="sm"
-                                onClick={()=>{
-                                    this.setState({
-                                        items: this.state.items.filter(item => item.id!== id)
-                                    })
-                                }}
+                                onClick={this.onDeleteClick.bind(this,id)}
                                 >
                                     &times;
                                 </Button>
@@ -66,6 +71,7 @@ class LogList extends Component {
                     </TransitionGroup>
                 </ListGroup>
             </Container>
+            </>
         )
     }
 }
@@ -81,5 +87,5 @@ const mapStateToProps = (state) => ({
 
 
 export default connect(
-    mapStateToProps, {getItems})
+    mapStateToProps, {getItems,deleteItem})
     (LogList)
