@@ -7,13 +7,25 @@ import {
   Nav,
   NavItem,
   NavLink,
-//   NavbarText
+  NavbarText
 } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { logout } from '../actions/authActions'
 
-const Example = (props) => {
+const Navigation = (props) => {
+
+  let history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    props.logout()
+    history.push('/')
+  }
 
   return (
     <div>
@@ -28,6 +40,33 @@ const Example = (props) => {
             <NavItem>
               <NavLink href="/logtoday">Log Today</NavLink>
             </NavItem>
+            {
+              props.isAuthenticated ? 
+              (
+                <>
+                <NavbarText> {props.user ? 'Welcome '+props.user.name : ''}</NavbarText>
+                <NavItem>
+              <NavLink onClick={handleLogout}>Logout</NavLink>
+            </NavItem>
+            </>
+              ) : 
+              (
+                <>
+                <NavItem>
+              <NavLink href="/login">Login</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/signup">Signup</NavLink>
+            </NavItem>
+            </>
+              )
+            }
+            {/* <NavItem>
+              <NavLink href="/login">Login</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/signup">Signup</NavLink>
+            </NavItem> */}
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>
@@ -36,4 +75,20 @@ const Example = (props) => {
   );
 }
 
-export default Example;
+// export default Navigation;
+Navigation.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+  error: state.error,
+  logout: PropTypes.func.isRequired
+})
+
+export default connect(
+  mapStateToProps,
+  {logout}
+)(Navigation)
