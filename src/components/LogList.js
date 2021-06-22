@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import { getItems, deleteItem, updateItem } from '../actions/itemActions'
 import PropTypes from 'prop-types' 
 
+
 class LogList extends Component {
     // state = {
     //     items:[
@@ -33,7 +34,7 @@ class LogList extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount(){        
         this.props.getItems();
         
     }

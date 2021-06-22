@@ -9,8 +9,10 @@ export const getItems = () => (dispatch,getState) => {
     //     // payload: {}
     // }
     dispatch(setItemsLoading());
+    // const userId = getState().auth.user._id
+
     axios
-    .get('/api/logs',tokenConfig(getState))
+    .get(`/api/logs/`,tokenConfig(getState))
     .then(res => 
         dispatch({
             type: GET_ITEMS,
@@ -27,6 +29,7 @@ export const addItem = (item) => (dispatch,getState) => {
     //     type: ADD_ITEM,
     //     payload: item
     // }
+    // item.userId = getState().auth.user._id
     axios
     .post('/api/logs', item, tokenConfig(getState))
     .then(res=> 

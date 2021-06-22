@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Component} from 'react';
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom'
 import store from './store'
@@ -13,12 +13,16 @@ import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 
 
-function App() {
+class App extends Component {
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   store.dispatch(loadUser());
+  // }, [])
+  componentDidMount(){
     store.dispatch(loadUser());
-  }, [])
+  }
   
+  render(){
   return (
    <Provider store={store}> 
     <div className="App">
@@ -33,6 +37,7 @@ function App() {
     </Provider>
 
   );
+  }
 }
 
 export default App;
