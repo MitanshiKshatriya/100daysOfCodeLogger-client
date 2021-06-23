@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
+import Home from './components/Home';
 
 
 class App extends Component {
@@ -28,7 +29,8 @@ class App extends Component {
     <div className="App">
 <Navigation/>
 <Switch>
-    <Route exact path='/' component={LogList} />
+    <Route exact path='/' component={Home} />
+    <Route exact path='/loglist' component={LogList} />
     <Route path='/signup' component={Signup} />
     <Route path='/login' component={Login} />
 </Switch>

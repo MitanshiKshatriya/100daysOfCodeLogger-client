@@ -38,7 +38,10 @@ const Navigation = (props) => {
               <NavLink href="/resources">Get Inspired</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/logtoday">Log Today</NavLink>
+              <NavLink href="/loglist">Log Today</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/loglist">Log List</NavLink>
             </NavItem>
             {
               props.isAuthenticated ? 

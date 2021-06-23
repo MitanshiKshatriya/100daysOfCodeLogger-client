@@ -41,6 +41,7 @@ class LogList extends Component {
     // _id coming from mongo
     onDeleteClick = (id) => {
         this.props.deleteItem(id);
+        window.location.reload()
     }
 
     onUpdateClick = (_id,desc) => {
@@ -92,11 +93,17 @@ class LogList extends Component {
     render() {
         // this.props.item.items
         const {items} = this.props.item
+        if(this.props.isLoading)
+        return <div>Loading...</div>
+        else
         return (
             <>
             <Container>
                 {/* {this.renderModal()} */}
-                <ItemModal isUpdate={this.state.isUpdate}/>
+                <ItemModal isUpdate={this.state.isUpdate} 
+                // days_completed={this.props.days_completed}
+
+                />
             </Container>
             <Container>
                 {/* <Button
@@ -190,7 +197,8 @@ LogList.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    item: state.item
+    item: state.item,
+    isLoading: state.auth.isLoading
 })
 
 

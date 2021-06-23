@@ -13,7 +13,13 @@ import {
 
 import { connect } from 'react-redux'
 import { addItem } from '../actions/itemActions'
-import uuid from 'react-uuid'
+
+const getStringDate = () => {
+    let d  = new Date()
+    // 2021-06-23
+    let month = d.getMonth()+1>10 ? `${d.getMonth()+1}` : `0${d.getMonth()+1}`
+    return `${d.getFullYear()}-${month}-${d.getDate()}`
+}
 
 class ItemModal extends Component {
 
@@ -21,7 +27,9 @@ class ItemModal extends Component {
         modal: this.props.isUpdate,
         isUpdate: this.props.isUpdate,
         _id: '',
-        desc: ''
+        desc: '',
+        date: getStringDate(),
+        day: 0
     }
 
     toggle = () => {
@@ -40,16 +48,20 @@ class ItemModal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-
+        // 2021-06-23
         const newItem = {
             // id: uuid(),
-            desc: this.state.desc
+            desc: this.state.desc,
+            day: this.state.day,
+            date: this.state.date
         }
         // add item via addItem action
         this.props.addItem(newItem);
 
         //close modal
         this.toggle();
+
+        window.location.reload()
     }
 
 
@@ -86,6 +98,21 @@ class ItemModal extends Component {
                             placeholder="log your progress"
                             onChange={this.onChange}
                         />
+                        <Input
+                            type="date"
+                            name="date"
+                            id="date"
+                            defaultValue={this.state.date}
+                            onChange={this.onChange}
+                        />
+                        <Input
+                            type="number"
+                            name="day"
+                            id="day"
+                            placeholder={`Log for day ${this.props.days_completed+1}`}
+                            // value={this.state.day}
+                            onChange={this.onChange}
+                        />
                         <Button
                         color='dark'
                         style={{marginTop:'2rem'}}
@@ -102,7 +129,8 @@ class ItemModal extends Component {
 }
 
 const mapStateToProps = state =>  ({
-    item: state.item
+    item: state.item,
+    days_completed: state.auth.user !== null ? state.auth.user.days_completed : 0
 })
 
 export default connect(mapStateToProps,{addItem})(ItemModal);

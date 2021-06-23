@@ -32,11 +32,12 @@ export const addItem = (item) => (dispatch,getState) => {
     // item.userId = getState().auth.user._id
     axios
     .post('/api/logs', item, tokenConfig(getState))
-    .then(res=> 
+    .then(res=> {
         dispatch({
             type:ADD_ITEM,
             payload: res.data
         })
+    }
     )
     .catch(err=>
         console.log(err) 

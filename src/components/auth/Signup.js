@@ -38,7 +38,7 @@ class Signup extends Component {
         }
         // If auth redirect to loglist
         if(isAuthenticated){
-            this.props.history.push('/')
+            this.props.history.push('/loglist')
         }
     }
 

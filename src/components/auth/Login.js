@@ -13,6 +13,7 @@ import {
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { login } from '../../actions/authActions'
+import { clearErrors } from '../../actions/errorActions'
 
 class Login extends Component {
 
@@ -39,7 +40,8 @@ class Login extends Component {
         }
         // If auth redirect to loglist
         if(isAuthenticated){
-            this.props.history.push('/')
+            this.props.clearErrors()
+            this.props.history.push('/loglist')
         }
     }
 
@@ -114,5 +116,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {login}
+    {login,clearErrors}
 )(Login)

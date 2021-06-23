@@ -2,6 +2,8 @@ import { STATES } from 'mongoose';
 import {
     USER_LOADED,
     USER_LOADING,
+    UPDATE_DAYS_COMPLETED_ADD,
+    UPDATE_DAYS_COMPLETED_DELETE,
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -52,6 +54,18 @@ export default function(state=initalState, action) {
             isAuthenticated: false,
             isLoading: false
           };
+
+    case UPDATE_DAYS_COMPLETED_ADD:
+      return {
+        ...state,
+        user:action.payload //updated user
+      }
+
+    case UPDATE_DAYS_COMPLETED_DELETE:
+        return {
+          ...state,
+          
+        }
 
     
         default:

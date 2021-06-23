@@ -3,13 +3,14 @@ import { returnErrors } from './errorActions';
 import {
   USER_LOADED,
   USER_LOADING,
+  UPDATE_DAYS_COMPLETED_ADD,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  CLEAR_ERRORS
+//   CLEAR_ERRORS
 } from './types';
 
 //Check token & load user
@@ -111,4 +112,14 @@ export const tokenConfig = getState => {
         config.headers['x-auth-token'] = token
     }
     return config
+}
+
+// update days_completed_add - NOT USING CURRENTLY
+export const days_add = () => (dispatch,getState) => {
+    let user = getState().user
+    user.days_completed = user.days_completed+1
+    dispatch({
+        type:UPDATE_DAYS_COMPLETED_ADD,
+        payload:user
+    })
 }
