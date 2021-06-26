@@ -1,4 +1,3 @@
-import { STATES } from 'mongoose';
 import {
     USER_LOADED,
     USER_LOADING,
@@ -26,7 +25,7 @@ export default function(state=initalState, action) {
                 isLoading: true
             }
         case USER_LOADED:
-          console.log(action.payload)
+          // console.log(action.payload)
             return {
                 ...state,
                 isAuthenticated:true,

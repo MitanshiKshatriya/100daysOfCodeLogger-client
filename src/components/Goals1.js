@@ -1,33 +1,36 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types' 
-import store from '../store'
+import uuid from 'react-uuid'
 import classnames from 'classnames';
-
+import { MdCheck, MdClose } from 'react-icons/md'
 import { 
   TabContent, 
   TabPane, 
   Nav, 
   NavItem, 
   NavLink, 
-  Card, 
   Button, 
-  CardTitle, 
-  CardText, 
-  Row, 
-  Col 
 } from 'reactstrap';
-import { loadGoals } from '../actions/goalActions';
+import { loadGoals, postGoals } from '../actions/goalActions';
+
+const mdicons = (bool) => {
+if(bool)
+return <MdCheck size="1.3em"/>
+else
+return <MdClose size="1.3em"/>
+}
 
 
 const padarray = (array) => {
-  let arr = []
+  if(array===null)
+  array=[]
   if(array.length>=6)
   return array
   else{
-    for(let i=0;i<6-array.length;i++){
+    let n = array.length
+    for(let i=0;i<6-n;i++){
       array.push({
-        _id:'',
         goal:'',
         completed:false
       })
@@ -78,39 +81,58 @@ class Goals extends Component {
     })
   }
 
-  componentDidMount(){
-    this.props.loadGoals()
-    // this.props.goals.map(({_id,goal,completed},i)=>{
-    //   this.setState({
-    //     ["goal"+i]:goal,
-    //     ["check"+i]:completed,
-    //     ["id"+i]:_id,
-    //   })
-    // })
-  }
+  
 
   handleChange = (e) => {
     this.setState({
-        // dont need to write multiple inputs
-        // name is name attr of input
         [e.target.name]: e.target.value
     })
   }
 
   handleCheckboxChange = (e) => {
     this.setState({
-        // dont need to write multiple inputs
-        // name is name attr of input
         [e.target.name]: e.target.checked
     })
   }
 
   handleSubmit = (e) => {
-    console.log(this.state)
+    e.preventDefault()
+    let goals = []
+    for(var i=0;i<6;i++){
+      if(this.state['goal'+i]!==''){
+        goals.push({
+          _id: this.state['id'+i]===undefined ? uuid() : this.state['id'+i],
+          goal: this.state['goal'+i],
+          completed: this.state['check'+i]===true ? true : false
+
+        })
+      }
+    }
+    this.props.postGoals(goals)
+    window.location.reload()
+  }
+
+  componentDidMount(){
+    if(this.props.goals)
+    this.props.goals.map(({_id,goal,completed},i)=>{
+      this.setState({
+        ["goal"+i]:goal,
+        ["check"+i]:completed,
+        ["id"+i]:_id,
+      })
+    })
+    // for(let i=this.props.goals.length-1;i<=0;i--){
+    //   this.setState({
+    //     ["id"+i]:uuid(),
+    //   })
+    // }
   }
 
   render() {
     let array = padarray(this.props.goals)
+    if(this.props.isLoading===true) 
+    return <div></div>
+    else
     return (
       <>
         <div className="container3">
@@ -136,16 +158,20 @@ class Goals extends Component {
         <TabPane tabId="1">
         <div className="goals-container">
         {
-          this.props.goals.length>0 ?
-          this.props.goals.map(({_id,goal,completed})=>(
-            <div className="goals">
-                    <p><input type="checkbox" checked={completed}/>{" "}{goal}</p>
+          this.props.goals && this.props.goals.length>0 ?
+          this.props.goals.map(({_id,goal,completed},index)=>(
+            <div className="goals" key={uuid()}
+            style={{visibility:goal.length>0? "visible" : "hidden"}}
+            >
+                    <div>
+                    {/* <input type="checkbox" checked={completed}/> */}
+                    {mdicons(completed)}
+                    {" "}{goal}</div>
                     </div>
           ))
           :
           <div></div>
-        }
-                    
+        }          
                 </div>
         </TabPane>
         <TabPane tabId="2">
@@ -153,21 +179,21 @@ class Goals extends Component {
         {
           array.length>0 ?
           array.map(({_id,goal,completed},index)=>(
-            <div className="goals">
-                    <p>
+            <div className="goals" key={index}>
+                    <div>
                     <input type="checkbox" 
                     checked={this.state["check"+index]}
-                    onClick={e=>this.handleCheckboxChange}
-                    defaultValue={completed}
+                    onChange={this.handleCheckboxChange}
+                    // defaultValue={completed}
                     name={"check"+index}
                     />{" "}
                     <input type="text" 
-                    name={"goals"+index} 
-                    defaultValue={goal}
-                    value={this.state["goals"+(index)]}
+                    name={"goal"+index} 
+                    // defaultValue={goal}
+                    value={this.state["goal"+(index)]}
                     onChange={this.handleChange}
                     />
-                    </p>
+                    </div>
                     </div>
           ))
           :
@@ -175,7 +201,7 @@ class Goals extends Component {
         }
         </div>
         <div className="edit-goals-btn mt-2">
-          <Button onClick={()=>this.handleSubmit}>Update</Button>
+          <Button onClick={this.handleSubmit}>Update</Button>
         </div>
         </TabPane>
       </TabContent>
@@ -187,17 +213,17 @@ class Goals extends Component {
 }
 
 Goals.propTypes = {
-  goals: PropTypes.object.isRequired
+  // goals: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  goals: state.goal.goals,
+//   goals: state.goal.goals,
   isLoading: state.goal.isLoading
 })
 
 
 export default connect(
-  mapStateToProps, {loadGoals})
+  mapStateToProps, {loadGoals,postGoals})
   (Goals)
 
 

@@ -1,15 +1,20 @@
 import React from 'react'
 import { 
-    Button,
+    // Button,
     Container,
     Progress
 } from 'reactstrap'
-import {MdAccountCircle} from 'react-icons/md'
+import {MdAccountCircle, } from 'react-icons/md'
 import { connect } from 'react-redux'
-import { PromiseProvider } from 'mongoose'
-import { isLogin } from '../actions/authActions'
+import Goals from './Goals1'
+import { loadGoals } from '../actions/goalActions'
 
 class Profile extends React.Component {
+
+    componentDidMount(){
+        this.props.loadGoals()
+    }
+    
     render(){
         let user={}
         if(this.props.user===null){
@@ -17,36 +22,22 @@ class Profile extends React.Component {
             user.days_completed=0
         }
         else user = this.props.user
+        if(this.props.isLoading===true)
+        return <div>Loading...</div>
+        else
     return (
         <>
             <Container>
             <div className="mt-5 text-center container2">
             <MdAccountCircle size="4.5em"/>
-           <h1>Welcome {user.name}</h1> 
-           <p className="container3 mt-5 mb-5">
+           {/* <h1>Welcome {user.name}</h1>  */}
+           <h1>Welcome {user.name.charAt(0).toUpperCase()+user.name.slice(1)}</h1> 
+           <div className="container3 mt-5 mb-5">
            <div className="text-center">{user.days_completed}/100 Days</div>
            <Progress value={user.days_completed} className="mt-2" />
-           </p>
+           </div>
             </div>
-            {/* <div className="container3">
-                <div className="goals-container">
-                    <div className="goals">
-        <p><input type="checkbox"/>{" "}Learn GoLang</p>
-        <p><input type="checkbox"/>{" "}Learn React</p>
-        <p><input type="checkbox"/>{" "}Work on golang project</p>
-                    </div>
-                    <div className="goals">
-                    <p><input type="checkbox"/>{" "}Learn GoLang</p>
-        <p><input type="checkbox"/>{" "}Learn React</p>
-        <p><input type="checkbox"/>{" "}Work on golang project</p>
-                    </div>
-                </div>
-            </div>
-            <div className="container3 btn-container mt-5">
-                <Button>Add goals</Button>
-                {" "}
-                <Button>Edit Status</Button>
-            </div> */}
+            <Goals goals={this.props.goals} />
             </Container>
         </>
     )
@@ -58,9 +49,11 @@ class Profile extends React.Component {
   const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
+    goals: state.goal.goals,
+    isLoading: state.goal.isLoading
   })
   
   export default connect(
     mapStateToProps,
-    {isLogin}
+    {loadGoals}
   )(Profile)

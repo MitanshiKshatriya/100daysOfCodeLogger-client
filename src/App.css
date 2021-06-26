@@ -183,6 +183,18 @@ hr{
 		2,
 		minmax(250px, 1fr)
 	);
+	
+}
+.goals-edit-container
+{
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(
+		2,
+		minmax(250px, 1fr)
+	);
+	background-color: rgb(233, 233, 233);
+	
 }
 .btn-container{
 	text-align: right;

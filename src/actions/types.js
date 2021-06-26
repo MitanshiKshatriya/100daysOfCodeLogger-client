@@ -18,3 +18,8 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 // for handling days_completed
 export const UPDATE_DAYS_COMPLETED_ADD = 'UPDATE_DAYS_COMPLETED_ADD';
 export const UPDATE_DAYS_COMPLETED_DELETE = 'UPDATE_DAYS_COMPLETED_DELETE';
+
+// for handling goals
+export const GOALS_LOADING = 'GOALS_LOADING'
+export const GET_GOALS = 'GET_GOALS'
+export const POST_GOALS = 'POST_GOALS'

@@ -5,8 +5,8 @@ import store from './store'
 import { loadUser } from './actions/authActions';
 
 import Navigation from './components/Navigation';
-import LogList from './components/LogList';
-import LogGrid from './components/LogGrid';
+// import LogList from './components/LogList';
+// import LogGrid from './components/LogGrid';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
