@@ -88,22 +88,33 @@ class ItemModal extends Component {
                 <ModalBody>
                     <Form onSubmit={this.onSubmit}>
                     <FormGroup>
-                        <Label for="log">
+                        {/* <Label for="log">
                             Add Log
-                        </Label>
-                        <Input
+                        </Label> 
+                         <Input
                             type="text"
                             name="desc"
                             id="item"
                             placeholder="log your progress"
                             onChange={this.onChange}
-                        />
+                            className="mt-2"
+                        /> */}
+                        <textarea
+                            type="text"
+                            name="desc"
+                            id="item"
+                            placeholder="Log your progress"
+                            rows="6"
+                            onChange={this.onChange}
+                            className="mt-2"
+                        ></textarea>
                         <Input
                             type="date"
                             name="date"
                             id="date"
                             defaultValue={this.state.date}
                             onChange={this.onChange}
+                            className="mt-2"
                         />
                         <Input
                             type="number"
@@ -112,6 +123,7 @@ class ItemModal extends Component {
                             placeholder={`Log for day ${this.props.days_completed+1}`}
                             // value={this.state.day}
                             onChange={this.onChange}
+                            className="mt-2"
                         />
                         <Button
                         color='dark'

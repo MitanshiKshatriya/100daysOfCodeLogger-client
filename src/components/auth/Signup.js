@@ -13,6 +13,8 @@ import PropTypes from 'prop-types'
 import { register } from '../../actions/authActions'
 import { connect } from 'react-redux'
 
+import signupimg  from '../../assets/undraw_enter_uhqk.svg'
+
 class Signup extends Component {
 
     state = {
@@ -71,8 +73,11 @@ class Signup extends Component {
 
 
     return (
-        <div>
-        <Container>
+        <div className="lognsignup container1">
+        <Container className="loginsignupimg">
+        <img src={signupimg}/>
+        </Container>
+        <Container className="container1 mt-5">
         { this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : null}
             <Form onSubmit={this.onSubmit}>
             <FormGroup>

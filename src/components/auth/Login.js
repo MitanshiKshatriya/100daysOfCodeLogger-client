@@ -15,6 +15,8 @@ import { connect } from 'react-redux'
 import { login } from '../../actions/authActions'
 import { clearErrors } from '../../actions/errorActions'
 
+import loginimg  from '../../assets/undraw_enter_uhqk.svg'
+
 class Login extends Component {
 
     state = {
@@ -74,18 +76,21 @@ class Login extends Component {
 
     return (
         
-        <div>
-        <Container>
+        <div className="lognsignup container1">
+        <Container className="loginsignupimg">
+        <img src={loginimg}/>
+        </Container>
+        <Container className="container1 mt-5">
         { this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : null}
             <Form onSubmit={this.onSubmit}>
-            <FormGroup>
-        <Label for="email">Email</Label>
+            <FormGroup className="mt-2">
+        <Label className="loginsignuplabel" for="email">Email</Label>
         <Input type="email" name="email" id="email" placeholder="email" 
              onChange={this.handleChange}
         />
       </FormGroup>
-      <FormGroup>
-        <Label for="password">Password</Label>
+      <FormGroup className="mt-2">
+        <Label className="loginsignuplabel" for="password">Password</Label>
         <Input type="password" name="password" id="password" placeholder="password" 
              onChange={this.handleChange}
         />

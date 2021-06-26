@@ -123,3 +123,8 @@ export const days_add = () => (dispatch,getState) => {
         payload:user
     })
 }
+
+export const isLogin = () => getState => {
+    let isAuthenticated = getState().isAuthenticated
+    return isAuthenticated
+}

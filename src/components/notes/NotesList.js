@@ -8,29 +8,30 @@ import {
     Form,
     FormGroup,
     Label,
-    Input
+    Input,
+    Col,
+    Row,
+    Card,
+    CardBody,
+    CardTitle,
+    CardText
 } from 'reactstrap'
-import LogModal from './LogModal';
+import LogModal from '../LogModal';
 
 import {connect} from 'react-redux';
-import { getItems, deleteItem, updateItem } from '../actions/itemActions'
+import { getItems, deleteItem, updateItem } from '../../actions/itemActions'
 import PropTypes from 'prop-types' 
+import Note from './Note';
+import Search from '../Search';
 
 
 class LogList extends Component {
-    // state = {
-    //     items:[
-    //         {id:uuid(),desc:"Helo"},
-    //         {id:uuid(),desc:"Helo"},
-    //         {id:uuid(),desc:"Helo"},
-    //         {id:uuid(),desc:"Helo"},
-    //     ]
-    // }
 
     state = {
         modal: false,
         update_id: '',
-        update_desc: ''
+        update_desc: '',
+        search: ''
 
     }
 
@@ -84,73 +85,52 @@ class LogList extends Component {
 
         //close modal
         this.toggle();
+        window.location.reload()
     }
 
    /*
    * Update functions
     */
 
+   /*
+   * Search Function
+    */
+   handleSearchLog = (text) => {
+    this.setState({
+        search:text
+    })
+   }
+   /*
+   * Search Function
+    */
+
     render() {
         // this.props.item.items
-        const {items} = this.props.item
+        // const {items} = this.props.item
+        // filtering items
+        const items = this.props.item.items.filter((i)=>
+            i.desc.toLowerCase().includes(this.state.search)
+        )
         if(this.props.isLoading)
         return <div>Loading...</div>
         else
         return (
             <>
-            <Container>
-                {/* {this.renderModal()} */}
+            <Search handleSearchLog={this.handleSearchLog}/>
+            <div className="container2">
                 <LogModal isUpdate={this.state.isUpdate} 
-                // days_completed={this.props.days_completed}
-
                 />
-            </Container>
-            <Container>
-                {/* <Button
-                color = "dark"
-                style = {{marginBottom:"2rem"}}
-                onClick={()=> {
-                    const desc = prompt('Enter Item');
-                    if(desc){
-                        this.setState({
-                            // items: [...this.state.items,{id:uuid(),desc}]
-                        })
-                    }
-                }}
-                >Add Item</Button> */}
-
-                <ListGroup>
-                    <TransitionGroup className="log-list">
-                       {
-                           items.map(({_id,desc})=>(
-                               <CSSTransition key={_id} timeout={500} classNames="fade">
-                                
-                                <ListGroupItem>
-                                <Button
-                                className="remove-btn"
-                                color="danger"
-                                size="sm"
-                                onClick={this.onDeleteClick.bind(this,_id)}
-                                >
-                                    &times;
-                                </Button>
-                                <Button
-                                className="edit-btn"
-                                color="danger"
-                                size="sm"
-                                onClick={this.onUpdateClick.bind(this,_id,desc)}
-                                >
-                                    Edit
-                                </Button>
-                                    {desc}
-                                </ListGroupItem>
-
-                               </CSSTransition>
-                           ))
-                       } 
-                    </TransitionGroup>
-                </ListGroup>
-            </Container>
+            </div>
+            <div className="container1">
+            <div className='notes-list'>
+            {items.map(({_id,desc,day,date})=>(
+                <Note _id={_id} desc={desc} day={day} date={date}
+                    onDeleteClick={this.onDeleteClick.bind(this,_id)}
+                    onUpdateClick={this.onUpdateClick.bind(this,_id,desc)}
+                />
+            ))}
+            </div>
+            </div>
             <Container>
             <Modal
                 isOpen={this.state.modal}
@@ -164,7 +144,7 @@ class LogList extends Component {
                 <ModalBody>
                     <Form onSubmit={this.onSubmitUpdate}>
                     <FormGroup>
-                        <Label for="log">
+                        {/* <Label for="log">
                             Update Log
                         </Label>
                         <Input
@@ -174,7 +154,17 @@ class LogList extends Component {
                             placeholder="log your progress"
                             value={this.state.update_desc}
                             onChange={this.onChange}
-                        />
+                        /> */}
+                        <textarea
+                            type="text"
+                            name="desc"
+                            id="item"
+                            placeholder="Update your log"
+                            rows="6"
+                            value={this.state.update_desc}
+                            onChange={this.onChange}
+                        >
+                        </textarea>
                         <Button
                         color='dark'
                         style={{marginTop:'2rem'}}

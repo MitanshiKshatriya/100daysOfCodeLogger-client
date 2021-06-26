@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {MdAccountCircle} from 'react-icons/md'
 import {
   Collapse,
   Navbar,
@@ -7,9 +8,13 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText
+  NavbarText,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logout } from '../actions/authActions'
@@ -28,17 +33,14 @@ const Navigation = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Navbar color="white" light expand="md">
         <NavbarBrand href="/">#100DaysOfCode Logger</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar >
+          <Nav className="navmargin" navbar>
             <NavItem>
               <NavLink href="/resources">Get Inspired</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/loglist">Log Today</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/loglist">Log List</NavLink>
@@ -47,10 +49,27 @@ const Navigation = (props) => {
               props.isAuthenticated ? 
               (
                 <>
-                <NavbarText> {props.user ? 'Welcome '+props.user.name : ''}</NavbarText>
+                {/* <NavbarText> {props.user ? 'Welcome '+props.user.name : ''}</NavbarText>
                 <NavItem>
               <NavLink onClick={handleLogout}>Logout</NavLink>
-            </NavItem>
+            </NavItem> */}
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+              <NavbarText>{props.user.name+" "}</NavbarText>
+                <MdAccountCircle 
+                  className="profile-icon" size="1.5em"
+                />
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  <Link to="/profile">Profile</Link>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={handleLogout}>
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
             </>
               ) : 
               (
@@ -64,14 +83,7 @@ const Navigation = (props) => {
             </>
               )
             }
-            {/* <NavItem>
-              <NavLink href="/login">Login</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/signup">Signup</NavLink>
-            </NavItem> */}
           </Nav>
-          {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>
       </Navbar>
     </div>

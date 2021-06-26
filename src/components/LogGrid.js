@@ -8,7 +8,13 @@ import {
     Form,
     FormGroup,
     Label,
-    Input
+    Input,
+    Col,
+    Row,
+    Card,
+    CardBody,
+    CardTitle,
+    CardText
 } from 'reactstrap'
 import LogModal from './LogModal';
 
@@ -17,7 +23,7 @@ import { getItems, deleteItem, updateItem } from '../actions/itemActions'
 import PropTypes from 'prop-types' 
 
 
-class LogList extends Component {
+class LogGrid extends Component {
     // state = {
     //     items:[
     //         {id:uuid(),desc:"Helo"},
@@ -106,27 +112,20 @@ class LogList extends Component {
                 />
             </Container>
             <Container>
-                {/* <Button
-                color = "dark"
-                style = {{marginBottom:"2rem"}}
-                onClick={()=> {
-                    const desc = prompt('Enter Item');
-                    if(desc){
-                        this.setState({
-                            // items: [...this.state.items,{id:uuid(),desc}]
-                        })
-                    }
-                }}
-                >Add Item</Button> */}
-
-                <ListGroup>
-                    <TransitionGroup className="log-list">
+                <Row>
+                <Col sm="4">
+                    
                        {
-                           items.map(({_id,desc})=>(
-                               <CSSTransition key={_id} timeout={500} classNames="fade">
+                           items.map(({_id,desc,day,date})=>(
+                               
                                 
-                                <ListGroupItem>
-                                <Button
+                                
+                                <Card>
+                                <CardBody>
+                                <CardTitle>Day {day}</CardTitle>
+                                
+                                    <CardText>{desc}</CardText>
+                                    <Button
                                 className="remove-btn"
                                 color="danger"
                                 size="sm"
@@ -142,14 +141,16 @@ class LogList extends Component {
                                 >
                                     Edit
                                 </Button>
-                                    {desc}
-                                </ListGroupItem>
+                                </CardBody>
+                                </Card>
+                                
 
-                               </CSSTransition>
+
                            ))
                        } 
-                    </TransitionGroup>
-                </ListGroup>
+                    
+                    </Col>
+                </Row>
             </Container>
             <Container>
             <Modal
@@ -191,7 +192,7 @@ class LogList extends Component {
     }
 }
 
-LogList.propTypes = {
+LogGrid.propTypes = {
     getItems: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired
 }
@@ -204,4 +205,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, {getItems,deleteItem,updateItem})
-    (LogList)
+    (LogGrid)
