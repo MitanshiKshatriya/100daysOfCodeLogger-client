@@ -14,6 +14,7 @@ import { register } from '../../actions/authActions'
 import { connect } from 'react-redux'
 
 import signupimg  from '../../assets/undraw_enter_uhqk.svg'
+import {Link} from 'react-router-dom'
 
 class Signup extends Component {
 
@@ -103,6 +104,9 @@ class Signup extends Component {
                         style={{marginTop:'2rem'}}
                         block
                         >SignUp</Button>
+        <br/>
+        <br/>
+        <Label>Already have an account? <Link to="/login">Login</Link></Label>
             </Form>
             </Container>
         </div>

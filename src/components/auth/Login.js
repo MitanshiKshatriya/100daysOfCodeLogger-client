@@ -16,6 +16,7 @@ import { login } from '../../actions/authActions'
 import { clearErrors } from '../../actions/errorActions'
 
 import loginimg  from '../../assets/undraw_enter_uhqk.svg'
+import {Link} from 'react-router-dom'
 
 class Login extends Component {
 
@@ -100,6 +101,9 @@ class Login extends Component {
                         style={{marginTop:'2rem'}}
                         block
                         >Login</Button>
+            <br/>
+            <br/>
+            <Label>Click Here to <Link to="/signup">Create an account</Link></Label>
             </Form>
             </Container>
         </div>

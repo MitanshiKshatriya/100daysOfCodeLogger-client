@@ -28,7 +28,7 @@ class Profile extends React.Component {
            <Progress value={user.days_completed} className="mt-2" />
            </p>
             </div>
-            <div className="container3">
+            {/* <div className="container3">
                 <div className="goals-container">
                     <div className="goals">
         <p><input type="checkbox"/>{" "}Learn GoLang</p>
@@ -46,7 +46,7 @@ class Profile extends React.Component {
                 <Button>Add goals</Button>
                 {" "}
                 <Button>Edit Status</Button>
-            </div>
+            </div> */}
             </Container>
         </>
     )
