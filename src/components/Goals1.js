@@ -170,7 +170,7 @@ class Goals extends Component {
                     </div>
           ))
           :
-          <div></div>
+          <div>No goals added. Switch tab to add.</div>
         }          
                 </div>
         </TabPane>

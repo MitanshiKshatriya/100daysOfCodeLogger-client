@@ -74,7 +74,7 @@ class ItemModal extends Component {
                 style = {{marginBottom:'2rem'}}
                 onClick = {this.toggle}
                 >
-                Add Item Modal
+                Add a Log
                 </Button>
                 <Modal
                 isOpen={this.state.modal}
